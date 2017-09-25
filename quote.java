@@ -19,27 +19,32 @@ public class quote{
     private JLabel quotes2;
     private JLabel bal2;
     private JLabel time;
+    JLabel allBal;
     
     public String firm="FXPO";    
     public String qts;
 
     public quote(){
     	JFrame frame = new JFrame("FrameDemo");
+    	frame.setSize(400,400);
+    	frame.setLayout(new GridLayout(6, 1));
         //System.out.println(qts);
-        quotes = new JLabel();
-        bal = new JLabel();
-        quotes2 = new JLabel();
-        bal2 = new JLabel();
-        time = new JLabel();
+        quotes = new JLabel("",JLabel.CENTER);
+        bal = new JLabel("",JLabel.CENTER);
+        quotes2 = new JLabel("",JLabel.CENTER);
+        bal2 = new JLabel("",JLabel.CENTER);
+        time = new JLabel("",JLabel.CENTER);
+        allBal = new JLabel("",JLabel.CENTER);
         //setBounds(100, 100, 200, 200);
         //JPanel panel = new JPanel(new FlowLayout()); 
-        frame.add(time, BorderLayout.PAGE_START);
-        frame.add(quotes, BorderLayout.WEST);
-        frame.add(bal,BorderLayout.CENTER);
-        frame.add(quotes2, BorderLayout.SOUTH);
-        frame.add(bal2,BorderLayout.AFTER_LINE_ENDS);
+        frame.add(time);
+        frame.add(quotes);
+        frame.add(bal);
+        frame.add(quotes2);
+        frame.add(bal2);
+        frame.add(allBal);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    	frame.pack(); 
+    	//frame.pack(); 
     	frame.setVisible(true);
         }
 
@@ -82,14 +87,18 @@ public static void main(String[] args) throws IOException, InterruptedException 
     	String timeStamp = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss").format(new java.util.Date());
     	app.time.setText(timeStamp);
     	app.firm = "FXPO";
-    	app.quotes.setText("Quote for "+ app.firm +" is "+app.qts());
-    	app.bal.setText(app.firm + " balance is "+ 
-    			String.valueOf((int)(Float.parseFloat(app.qts())-320.8)*9.35-36.05));
+    	String val1 = app.qts();
+    	app.quotes.setText("Quote for "+ app.firm +" is "+ val1);
+    	double balF = (Float.parseFloat(val1)-320.8)*9.35-36.05;
+    	app.bal.setText(app.firm + " balance is "+ String.valueOf((int)(balF)));
+    	TimeUnit.SECONDS.sleep(5);
     	app.firm = "KAZ";
-    	app.quotes2.setText("Quote for "+app.firm +" is "+app.qts());
-    	app.bal2.setText(app.firm + " balance is "+ 
-    			String.valueOf((int)(Float.parseFloat(app.qts())-795)*2.4-30.59));
-    	TimeUnit.SECONDS.sleep(30);
+    	String val2 = app.qts();
+    	app.quotes2.setText("Quote for "+app.firm +" is "+ val2);
+    	double balS = (Float.parseFloat(val2)-795)*2.4-30.59;
+    	app.bal2.setText(app.firm + " balance is "+ String.valueOf((int)(balS)));
+    	app.allBal.setText(" All balance is "+ String.valueOf((int)(balF+balS)));
+    	TimeUnit.SECONDS.sleep(55);
     }
   }
 }
